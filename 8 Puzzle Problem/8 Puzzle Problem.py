@@ -8,12 +8,12 @@ Created on Mon Feb 17 22:49:20 2020
 import numpy as np
 import pandas as pd
 
-print("Enter the initial state of the puzzle:")
+print("Enter the initial state of the Puzzle:")
 
-InitialState = []
-GoalState = []
+initialState = []
+goalState = []
 
-for i in range(0,8):
+for i in range(0,9):
     print("Enter the value:")
-    InitialState[i] = input()
-    
+    value = int(input())
+    initialState.append(value)
