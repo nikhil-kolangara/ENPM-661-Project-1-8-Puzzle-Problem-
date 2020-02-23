@@ -15,8 +15,6 @@ actionList = ["left", "right", "up", "down"]
 nodeList = []
 valueList = []
 nodePath = []
-#parentNode = []
-#childNode = []
 
 
 class newNode:
@@ -27,7 +25,8 @@ class newNode:
 
 def inputNode():
     print("Enter the initial state of the Puzzle:")
-    initialState = np.empty([3,3])
+
+    initialState = []
     for i in range(3):
         for j in range(3):
             print("Enter the value:")
@@ -35,8 +34,9 @@ def inputNode():
             if (value > 8) or (value < 0):
                 print("Please enter values between 0 to 8")
             else: 
-                initialState[i][j] = int(value)
-    return np.reshape(initialState, (9))
+                initialState.append(int(value))
+    
+    return initialState
     
 def isSolvable(iS):
     solvable = iS #np.reshape(iS,9)
@@ -165,7 +165,7 @@ def solvePuzzle(startNode):
     
     for node in nodeList:
         try:
-            file_nodeInfo.write(columnWise([ valueList.index(node.data)+1, valueList.index(node.parent.data)+1, 0]))
+            file_nodeInfo.write(str(valueList.index(node.data)+1)+" "+str(valueList.index(node.parent.data)+1)+" 0")
             file_nodeInfo.write("\n")
         except: #no Parent Case
             file_nodeInfo.write(str(valueList.index(node.data)+1)+" 0 0")
@@ -179,9 +179,6 @@ def solvePuzzle(startNode):
         else:
             for action in actionList:
                 moveBlankTile(action, node)
-                
-    for node in nodeList:
-        print(node.data)
         
     try:
         index = valueList.index(goalState)
@@ -206,10 +203,7 @@ def solvePuzzle(startNode):
     file_nodeInfo.close()
                 
 
-initialState = [1,3,0,5,2,6,4,7,8]
-                #[[1, 3, 0],
-                #[5, 2, 6],
-                #[4, 7, 8]]#inputNode()
+initialState = inputNode()
 isCorrect(initialState)
 isSolvable(initialState)
 rootNode = newNode(0, initialState, None)
